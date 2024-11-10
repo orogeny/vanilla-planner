@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+#app {
+  padding: 0.5rem;
+  height: 100vh;
+
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sidebar {
+  flex: none;
+
+  width: 192px;
+}
+
+.main {
+  flex: 1 1 0%;
+
+  padding: 0.5rem;
+
+  border: 2px solid paleturquoise;
+  border-radius: 0.375rem;
+}
