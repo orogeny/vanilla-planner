@@ -20,6 +20,53 @@ body {
   flex: none;
 
   width: 192px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.palette {
+  border: 2px solid paleturquoise;
+  border-radius: 0.375rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .title {
+    background-color: paleturquoise;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .items {
+    display: flex;
+    flex-direction: column;
+
+    li {
+      border-top: 1px solid paleturquoise;
+    }
+
+    li:first-child {
+      border-top: none;
+    }
+  }
+
+  .item {
+    padding: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .catno {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-left: auto;
+  }
 }
 
 .main {
