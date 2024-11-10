@@ -13,8 +13,6 @@ function setup() {
 
   canvas.width = clientWidth;
   canvas.height = clientHeight;
-
-  console.log(`canvas sized (${clientWidth}, ${clientHeight})`);
 }
 
 export { setup };
