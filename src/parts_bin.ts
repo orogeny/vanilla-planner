@@ -1,13 +1,15 @@
-function setup() {
-  const partsBin = document.querySelector<HTMLDivElement>(".parts-bin");
+import { track_catalog } from "./track_catalog";
 
-  if (partsBin) {
-    partsBin.ondragover = handleDragOver;
-    partsBin.ondrop = handleDrop;
-  }
+let partsBin: HTMLDivElement;
+
+function setup() {
+  partsBin = document.querySelector<HTMLDivElement>(".parts-bin")!;
+
+  partsBin.ondragover = handleDragOver;
+  partsBin.ondrop = handleDrop;
 }
 
-// Drag/Drop Event handlers
+// Drag n Drop Event handlers
 
 function handleDragOver(ev: DragEvent) {
   ev.preventDefault();
@@ -16,9 +18,23 @@ function handleDragOver(ev: DragEvent) {
 }
 
 function handleDrop(ev: DragEvent) {
-  const trackId = ev.dataTransfer!.getData("text/plain") ?? "unknown";
+  const dropped = ev.dataTransfer!.getData("text/plain") ?? "unknown#0";
 
-  console.log(`dropped ${trackId} in parts bin`);
+  const trackId = dropped.split("#")?.[1] ?? "0";
+
+  const track = track_catalog.find((t) => t.id === trackId);
+
+  if (!track) {
+    console.log("unable to identify track");
+    return;
+  }
+
+  const item = document.createElement("p");
+  item.classList.add("part");
+  item.innerText = track.catno;
+  item.style.cssText = `background-color: ${track.colour};`;
+
+  partsBin.appendChild(item);
 }
 
 export { setup };

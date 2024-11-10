@@ -6,8 +6,6 @@ function setup() {
   for (const item of items) {
     item.ondragstart = onDragStart;
   }
-
-  console.log("trackItems:", items);
 }
 
 // Drag Event handlers
