@@ -30,3 +30,7 @@ body {
   border: 2px solid paleturquoise;
   border-radius: 0.375rem;
 }
+
+canvas.board {
+  background-color: blanchedalmond;
+}
