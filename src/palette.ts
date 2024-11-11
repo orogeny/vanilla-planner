@@ -4,16 +4,18 @@ function setup() {
   );
 
   for (const item of items) {
-    item.ondragstart = onDragStart;
+    item.ondragstart = handleDragStart;
   }
 }
 
 // Drag Event handlers
 
-function onDragStart(ev: DragEvent) {
-  const trackId = ev.currentTarget.id;
+function handleDragStart(ev: DragEvent) {
+  const item = ev.currentTarget as HTMLDivElement;
 
-  ev.dataTransfer.setData("text/plain", trackId);
+  const trackId = item.id;
+
+  ev.dataTransfer!.setData("text/plain", trackId);
 }
 
 export { setup };
