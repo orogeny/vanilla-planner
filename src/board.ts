@@ -1,5 +1,4 @@
 import { shapeFactory } from "./shape";
-import { track_catalog } from "./track_catalog";
 
 let canvas: HTMLCanvasElement;
 
@@ -27,24 +26,15 @@ function handleDragOver(ev: DragEvent) {
 }
 
 function handleDrop(ev: DragEvent) {
-  const dropped = ev.dataTransfer!.getData("text/plain");
+  let dropped = ev.dataTransfer!.getData("text/plain") ?? "unknown#0";
 
-  const trackId = dropped?.split("#")?.[1] ?? "0";
+  console.log(`dropped "${dropped}" onto canvas`);
 
-  const track = track_catalog.find((t) => t.id === trackId);
+  const [_, id] = dropped.split("#");
 
-  if (!track) {
-    console.log(`board::unable to identify dropped item: "${dropped}"`);
-    return;
-  }
-
-  console.log(`successfully dropped: ${track.catno} - ${track.label}`);
-
-  const shape = shapeFactory(canvas.width / 2, canvas.height / 2);
+  const shape = shapeFactory(id, ev.offsetX, ev.offsetY);
 
   const ctx = canvas.getContext("2d")!;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   shape.render(ctx);
 }
