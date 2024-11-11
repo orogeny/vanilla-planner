@@ -28,11 +28,13 @@ function handleDragOver(ev: DragEvent) {
 function handleDrop(ev: DragEvent) {
   let dropped = ev.dataTransfer!.getData("text/plain") ?? "unknown#0";
 
-  console.log(`dropped "${dropped}" onto canvas`);
+  console.log(
+    `dropped "${dropped}" @ (${ev.offsetX}, ${ev.offsetY}) onto canvas`
+  );
 
   const [_, id] = dropped.split("#");
 
-  const shape = shapeFactory(id, ev.offsetX, ev.offsetY);
+  const shape = shapeFactory(id, { x: ev.offsetX, y: ev.offsetY });
 
   const ctx = canvas.getContext("2d")!;
 
