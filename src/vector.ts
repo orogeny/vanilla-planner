@@ -1,4 +1,5 @@
 type Coords = { x: number; y: number };
+type Pose = { point: Vector; angle: number };
 
 class Vector implements Coords {
   x: number;
@@ -30,4 +31,24 @@ class Vector implements Coords {
   }
 }
 
-export { Vector, type Coords };
+function isPose(obj: any): obj is Pose {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "angle" in obj &&
+    "point" in obj &&
+    isVector(obj.point)
+  );
+}
+
+function isVector(obj: any): obj is Vector {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "XY" in obj &&
+    "x" in obj &&
+    "y" in obj
+  );
+}
+
+export { Vector, isPose, isVector, type Coords, type Pose };

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { Vector } from "./vector";
+import { isPose, isVector, Vector } from "./vector";
 
 describe("Coordinates", () => {
   test("should create vector from coordinates", () => {
@@ -32,5 +32,33 @@ describe("Coordinates", () => {
 
   test("should produce SVG coords", () => {
     expect(Vector.of({ x: -50, y: 100 }).XY).toBe("-50 100");
+  });
+});
+
+describe("Pose guard", () => {
+  test("should be a pose", () => {
+    const pose = { point: Vector.of({ x: 10, y: 10 }), angle: 90 } as unknown;
+
+    expect(isPose(pose)).toBeTruthy();
+  });
+
+  test("should not be a pose", () => {
+    const lookalike = { point: { x: 5, y: 5 }, angle: 20 };
+
+    expect(isPose(lookalike)).toBeFalsy();
+  });
+});
+
+describe("Vector guard", () => {
+  test("should be vector", () => {
+    const vector = Vector.of({ x: 0, y: 0 });
+
+    expect(isVector(vector)).toBeTruthy();
+  });
+
+  test("should not be vector", () => {
+    const location = { x: 10, y: 10 };
+
+    expect(isVector(location)).toBeFalsy();
   });
 });
