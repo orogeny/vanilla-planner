@@ -1,3 +1,4 @@
+import { shapeFactory } from "./shape";
 import { track_catalog } from "./track_catalog";
 
 let canvas: HTMLCanvasElement;
@@ -38,6 +39,14 @@ function handleDrop(ev: DragEvent) {
   }
 
   console.log(`successfully dropped: ${track.catno} - ${track.label}`);
+
+  const shape = shapeFactory(canvas.width / 2, canvas.height / 2);
+
+  const ctx = canvas.getContext("2d")!;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  shape.render(ctx);
 }
 
 export { setup };
