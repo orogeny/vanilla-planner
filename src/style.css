@@ -69,6 +69,28 @@ body {
   }
 }
 
+.parts-bin {
+  margin-top: auto;
+  min-height: 3rem;
+  border: 2px solid paleturquoise;
+  border-radius: 0.375rem;
+
+  padding: 0.5rem;
+
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.375rem;
+  /* align-items: center; */
+  align-content: flex-start;
+
+  .part {
+    font-size: 0.65rem;
+    background-color: aquamarine;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+}
+
 .main {
   flex: 1 1 0%;
 
