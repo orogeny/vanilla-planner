@@ -37,7 +37,23 @@ function shapeFactory(id: string, connection: Coords | Pose) {
     angle,
   };
 
-  const outline = [``];
+  const ou = {
+    x: (-unit.y * SLEEPER_LENGTH) / 2,
+    y: (unit.x * SLEEPER_LENGTH) / 2,
+  };
+
+  const topLeft = ep1.point.subtract(ou);
+  const bottomLeft = ep1.point.add(ou);
+  const topRight = ep2.point.subtract(ou);
+  const bottomRight = ep2.point.add(ou);
+
+  const outlineInstructions = [
+    `M ${topLeft.XY}`,
+    `L ${topRight.XY}`,
+    `L ${bottomRight.XY}`,
+    `L ${bottomLeft.XY}`,
+    "Z",
+  ];
 
   return {
     id,
@@ -50,7 +66,7 @@ function shapeFactory(id: string, connection: Coords | Pose) {
       ctx.lineTo(ep2.point.x, ep2.point.y);
       ctx.stroke();
     },
-    outline: outline.join(" "),
+    outline: outlineInstructions.join(" "),
   };
 }
 
