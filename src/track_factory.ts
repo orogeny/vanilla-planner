@@ -1,5 +1,5 @@
 import { TrackSpec } from "./track_catalog";
-import { Pose } from "./vector";
+import { Pose, Vector } from "./vector";
 
 type Track = {
   kind: "straight" | "unknown";
@@ -11,11 +11,16 @@ function trackLookup(catalog: TrackSpec[]) {
     const track = catalog.find((t) => t.id === trackId);
 
     if (!track) {
-      console.log(`No track with id "${trackId}" was found`);
       return unknownTrack();
     }
 
-    return { kind: "straight", endpoints: [] as Pose[] } as Track;
+    return {
+      kind: "straight",
+      endpoints: [
+        { vector: Vector.of({ x: 0, y: 0 }), angle: 0 },
+        { vector: Vector.of({ x: 100, y: 0 }), angle: 180 },
+      ] as Pose[],
+    } as Track;
   };
 }
 

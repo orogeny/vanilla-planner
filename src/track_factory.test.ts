@@ -36,4 +36,24 @@ describe("trackFactory", () => {
     expect(track).not.toBeUndefined();
     expect(track.kind).toBe("straight");
   });
+
+  test("should return a straight", () => {
+    const catalog: TrackSpec[] = [
+      {
+        id: "1",
+        kind: "straight",
+        catno: "TT8002",
+        label: "166mm",
+        colour: "#0bff01",
+        length: 166,
+      },
+    ];
+
+    const trackFactory = trackLookup(catalog);
+
+    const track = trackFactory("1");
+
+    expect(track.kind).toBe("straight");
+    expect(track.endpoints).toHaveLength(2);
+  });
 });
