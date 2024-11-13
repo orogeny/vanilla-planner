@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { Straight } from "./straight";
 import { Vector } from "../../lib/vector";
+import { normalizeAngle } from "../../lib/utils";
 
 describe("Straight", () => {
   test("should have two endpoints", () => {
@@ -43,7 +44,3 @@ describe("Straight", () => {
     expect(straight.endpoints[1].vector.XY).toBe("301 100");
   });
 });
-
-function normalizeAngle(degrees: number) {
-  return ((degrees % 360) + 360) % 360;
-}
