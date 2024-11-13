@@ -3,14 +3,12 @@ import { TrackSpec } from "./track_catalog";
 import { trackLookup } from "./track_factory";
 
 describe("trackFactory", () => {
-  test("should not return track", () => {
-    const catalog: TrackSpec[] = [];
-
-    const trackFactory = trackLookup(catalog);
+  test("should return unknown track", () => {
+    const trackFactory = trackLookup([]);
 
     const result = trackFactory("ZTT");
 
-    expect(result).toBeUndefined();
+    expect(result.kind).toBe("unknown");
   });
 
   test("should return track", () => {
@@ -30,6 +28,6 @@ describe("trackFactory", () => {
     const track = trackFactory("1");
 
     expect(track).not.toBeUndefined();
-    expect(track?.kind).toBe("straight");
+    expect(track.kind).toBe("straight");
   });
 });

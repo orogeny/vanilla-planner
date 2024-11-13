@@ -1,4 +1,5 @@
 import { TrackSpec } from "./track_catalog";
+import { Pose } from "./vector";
 
 type Track = {
   kind: "straight" | "unknown";
@@ -10,10 +11,16 @@ function trackLookup(catalog: TrackSpec[]) {
 
     if (!track) {
       console.log(`No track with id "${trackId}" was found`);
-      return track;
+      return unknownTrack();
     }
 
     return { kind: "straight" } as Track;
+  };
+}
+
+function unknownTrack() {
+  return {
+    kind: "unknown",
   };
 }
 
