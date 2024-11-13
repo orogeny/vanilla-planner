@@ -1,4 +1,4 @@
-import { Pose } from "./vector";
+import { Pose } from "../../lib/pose";
 
 class Track {
   readonly kind: string;

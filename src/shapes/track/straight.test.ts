@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { Straight } from "./straight";
-import { Vector } from "./vector";
+import { Vector } from "../../lib/vector";
 
 describe("Straight", () => {
   test("should have two endpoints", () => {

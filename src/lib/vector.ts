@@ -1,5 +1,6 @@
+import { Pose } from "./pose";
+
 type Coords = { x: number; y: number };
-type Pose = { vector: Vector; angle: number };
 
 class Vector implements Coords {
   x: number;

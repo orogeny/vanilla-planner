@@ -1,5 +1,6 @@
 import { Track } from "./track";
-import { Pose, Vector } from "./vector";
+import { Pose } from "../../lib/pose";
+import { Vector } from "../../lib/vector";
 
 class Straight extends Track {
   constructor(connection: Pose, length: number) {

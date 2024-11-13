@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { TrackSpec } from "./track_catalog";
+import { TrackSpec } from "../../track_catalog";
 import { trackLookup } from "./track_factory";
-import { Vector } from "./vector";
+import { Vector } from "../../lib/vector";
 
 describe("trackFactory - types", () => {
   test("should return unknown track", () => {
