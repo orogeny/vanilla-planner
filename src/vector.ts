@@ -15,7 +15,7 @@ class Vector implements Coords {
   }
 
   public get XY() {
-    return `${this.x} ${this.y}`;
+    return `${this.x.toFixed(0)} ${this.y.toFixed(0)}`;
   }
 
   add({ x, y }: Coords) {

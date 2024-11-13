@@ -1,14 +1,20 @@
 import { Track } from "./track";
-import { Pose } from "./vector";
+import { Pose, Vector } from "./vector";
 
 class Straight extends Track {
   constructor(connection: Pose, length: number) {
-    const start: Pose = {
+    const unit = Vector.of({
+      x: Math.cos((connection.angle * Math.PI) / 180),
+      y: Math.sin((connection.angle * Math.PI) / 180),
+    });
+
+    const start = {
       vector: connection.vector,
       angle: connection.angle - 180,
     };
-    const end: Pose = {
-      vector: connection.vector.add({ x: length, y: 0 }),
+
+    const end = {
+      vector: start.vector.add(unit.multiply(length)),
       angle: connection.angle,
     };
 
