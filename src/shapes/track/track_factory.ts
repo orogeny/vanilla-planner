@@ -1,6 +1,6 @@
 import { Straight } from "./straight";
 import { Track } from "./track";
-import { TrackSpec } from "../../track_catalog";
+import { TrackSpec } from "../../data/track_catalog";
 import { Coords, isPose, Pose, Vector } from "../../lib/vector";
 
 function trackLookup(catalog: TrackSpec[]) {

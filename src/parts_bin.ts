@@ -1,4 +1,4 @@
-import { track_catalog } from "./track_catalog";
+import { track_catalog } from "./data/track_catalog";
 
 let partsBin: HTMLDivElement;
 

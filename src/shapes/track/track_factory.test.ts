@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { TrackSpec } from "../../track_catalog";
+import { TrackSpec } from "../../data/track_catalog";
 import { trackLookup } from "./track_factory";
 import { Vector } from "../../lib/vector";
 

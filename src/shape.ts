@@ -1,5 +1,5 @@
-import { SLEEPER_LENGTH, track_catalog } from "./track_catalog";
-import { Coords, isPose, Pose, Vector } from "./vector";
+import { SLEEPER_LENGTH, track_catalog } from "./data/track_catalog";
+import { Coords, isPose, Pose, Vector } from "./lib/vector";
 
 type Shape = {
   id: string;
