@@ -9,7 +9,7 @@ class Straight extends Track {
     });
 
     const start = {
-      vector: connection.vector,
+      vector: connection.vector.add(unit),
       angle: connection.angle - 180,
     };
 

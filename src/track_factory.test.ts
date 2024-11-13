@@ -3,7 +3,7 @@ import { TrackSpec } from "./track_catalog";
 import { trackLookup } from "./track_factory";
 import { Vector } from "./vector";
 
-describe("trackFactory", () => {
+describe("trackFactory - types", () => {
   test("should return unknown track", () => {
     const trackFactory = trackLookup([]);
 
@@ -11,13 +11,17 @@ describe("trackFactory", () => {
 
     expect(result.kind).toBe("unknown");
   });
+});
 
+describe("trackFactory - unknown", () => {
   test("unknow track has zero endpoints", () => {
     const trackFactory = trackLookup([]);
 
     expect(trackFactory("ZTT", { x: 0, y: 0 }).endpoints).toHaveLength(0);
   });
+});
 
+describe("trackFactory - track", () => {
   test("should return track", () => {
     const catalog: TrackSpec[] = [
       {
@@ -75,10 +79,10 @@ describe("trackFactory", () => {
     const track = trackFactory("1", { x: 0, y: 0 });
 
     expect(track.endpoints[0].angle).toBe(-180);
-    expect(track.endpoints[0].vector.XY).toBe("0 0");
+    expect(track.endpoints[0].vector.XY).toBe("1 0");
 
     expect(track.endpoints[1].angle).toBe(0);
-    expect(track.endpoints[1].vector.XY).toBe("166 0");
+    expect(track.endpoints[1].vector.XY).toBe("167 0");
   });
 
   test("should accept pose", () => {
@@ -100,9 +104,9 @@ describe("trackFactory", () => {
     const track = trackFactory("1", verticalPose);
 
     expect(track.endpoints[0].angle).toBe(-90);
-    expect(track.endpoints[0].vector.XY).toBe("0 0");
+    expect(track.endpoints[0].vector.XY).toBe("0 1");
 
     expect(track.endpoints[1].angle).toBe(90);
-    expect(track.endpoints[1].vector.XY).toBe("0 166");
+    expect(track.endpoints[1].vector.XY).toBe("0 167");
   });
 });

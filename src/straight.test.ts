@@ -3,16 +3,47 @@ import { Straight } from "./straight";
 import { Vector } from "./vector";
 
 describe("Straight", () => {
-  test("horizontal endpoints are good", () => {
-    const connection = { vector: Vector.of({ x: 100, y: 100 }), angle: 0 };
+  test("should have two endpoints", () => {
+    const connection = { vector: Vector.of({ x: 100, y: 100 }), angle: 30 };
 
     const straight = new Straight(connection, 200);
 
     expect(straight.endpoints).toHaveLength(2);
-    expect(straight.endpoints[0].angle).toBe(-180);
-    expect(straight.endpoints[0].vector.XY).toBe("100 100");
+  });
 
-    expect(straight.endpoints[1].angle).toBe(0);
-    expect(straight.endpoints[1].vector.XY).toBe("300 100");
+  test("start should be in opposite direction", () => {
+    const connection = { vector: Vector.of({ x: 100, y: 100 }), angle: 60 };
+
+    const straight = new Straight(connection, 200);
+
+    expect(normalizeAngle(straight.endpoints[0].angle)).toBe(240);
+  });
+
+  test("end should be in same direction", () => {
+    const connection = { vector: Vector.of({ x: 100, y: 100 }), angle: 90 };
+
+    const straight = new Straight(connection, 200);
+
+    expect(normalizeAngle(straight.endpoints[1].angle)).toBe(90);
+  });
+
+  test("start should be offset one", () => {
+    const connection = { vector: Vector.of({ x: 100, y: 100 }), angle: 0 };
+
+    const straight = new Straight(connection, 200);
+
+    expect(straight.endpoints[0].vector.XY).toBe("101 100");
+  });
+
+  test("end should be offset one", () => {
+    const connection = { vector: Vector.of({ x: 100, y: 100 }), angle: 0 };
+
+    const straight = new Straight(connection, 200);
+
+    expect(straight.endpoints[1].vector.XY).toBe("301 100");
   });
 });
+
+function normalizeAngle(degrees: number) {
+  return ((degrees % 360) + 360) % 360;
+}
