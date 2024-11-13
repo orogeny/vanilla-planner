@@ -11,6 +11,12 @@ describe("trackFactory", () => {
     expect(result.kind).toBe("unknown");
   });
 
+  test("unknow track has zero endpoints", () => {
+    const trackFactory = trackLookup([]);
+
+    expect(trackFactory("ZTT").endpoints).toHaveLength(0);
+  });
+
   test("should return track", () => {
     const catalog: TrackSpec[] = [
       {

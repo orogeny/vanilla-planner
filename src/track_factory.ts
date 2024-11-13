@@ -3,6 +3,7 @@ import { Pose } from "./vector";
 
 type Track = {
   kind: "straight" | "unknown";
+  endpoints: Pose[];
 };
 
 function trackLookup(catalog: TrackSpec[]) {
@@ -14,13 +15,14 @@ function trackLookup(catalog: TrackSpec[]) {
       return unknownTrack();
     }
 
-    return { kind: "straight" } as Track;
+    return { kind: "straight", endpoints: [] as Pose[] } as Track;
   };
 }
 
 function unknownTrack() {
   return {
     kind: "unknown",
+    endpoints: [] as Pose[],
   };
 }
 
