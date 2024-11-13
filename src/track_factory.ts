@@ -1,34 +1,32 @@
+import { Straight } from "./straight";
+import { Track } from "./track";
 import { TrackSpec } from "./track_catalog";
-import { Pose, Vector } from "./vector";
-
-type Track = {
-  kind: "straight" | "unknown";
-  endpoints: Pose[];
-};
+import { Coords, isPose, Pose, Vector } from "./vector";
 
 function trackLookup(catalog: TrackSpec[]) {
-  return (trackId: string) => {
+  return (trackId: string, coords: Coords | Pose) => {
     const track = catalog.find((t) => t.id === trackId);
 
     if (!track) {
-      return unknownTrack();
+      return new UnknownTrack();
     }
 
-    return {
-      kind: "straight",
-      endpoints: [
-        { vector: Vector.of({ x: 0, y: 0 }), angle: 0 },
-        { vector: Vector.of({ x: 100, y: 0 }), angle: 180 },
-      ] as Pose[],
-    } as Track;
+    const connection = isPose(coords)
+      ? coords
+      : { vector: Vector.of(coords), angle: 0 };
+
+    if (track.kind === "straight") {
+      return new Straight(connection, track.length);
+    }
+
+    return new UnknownTrack();
   };
 }
 
-function unknownTrack() {
-  return {
-    kind: "unknown",
-    endpoints: [] as Pose[],
-  };
+class UnknownTrack extends Track {
+  constructor() {
+    super("unknown", []);
+  }
 }
 
-export { trackLookup as trackLookup };
+export { trackLookup };

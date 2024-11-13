@@ -1,16 +1,18 @@
+import { Track } from "./track";
 import { Pose } from "./vector";
 
-class Straight {
-  endpoints: Pose[];
-
+class Straight extends Track {
   constructor(connection: Pose, length: number) {
-    const start = { vector: connection.vector, angle: connection.angle - 180 };
-    const end = {
+    const start: Pose = {
+      vector: connection.vector,
+      angle: connection.angle - 180,
+    };
+    const end: Pose = {
       vector: connection.vector.add({ x: length, y: 0 }),
       angle: connection.angle,
     };
 
-    this.endpoints = [start, end];
+    super("straight", [start, end]);
   }
 }
 

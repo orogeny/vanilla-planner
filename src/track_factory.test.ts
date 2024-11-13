@@ -6,7 +6,7 @@ describe("trackFactory", () => {
   test("should return unknown track", () => {
     const trackFactory = trackLookup([]);
 
-    const result = trackFactory("ZTT");
+    const result = trackFactory("ZTT", { x: 0, y: 0 });
 
     expect(result.kind).toBe("unknown");
   });
@@ -14,7 +14,7 @@ describe("trackFactory", () => {
   test("unknow track has zero endpoints", () => {
     const trackFactory = trackLookup([]);
 
-    expect(trackFactory("ZTT").endpoints).toHaveLength(0);
+    expect(trackFactory("ZTT", { x: 0, y: 0 }).endpoints).toHaveLength(0);
   });
 
   test("should return track", () => {
@@ -31,7 +31,7 @@ describe("trackFactory", () => {
 
     const trackFactory = trackLookup(catalog);
 
-    const track = trackFactory("1");
+    const track = trackFactory("1", { x: 0, y: 0 });
 
     expect(track).not.toBeUndefined();
     expect(track.kind).toBe("straight");
@@ -51,7 +51,7 @@ describe("trackFactory", () => {
 
     const trackFactory = trackLookup(catalog);
 
-    const track = trackFactory("1");
+    const track = trackFactory("1", { x: 0, y: 0 });
 
     expect(track.kind).toBe("straight");
     expect(track.endpoints).toHaveLength(2);
