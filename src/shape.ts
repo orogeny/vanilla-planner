@@ -15,10 +15,10 @@ function shapeFactory(id: string, connection: Coords | Pose) {
     return { id: "", connectors: [], render: () => {}, outline: "" };
   }
 
-  const { point: start, angle } = isPose(connection)
+  const { vector: start, angle } = isPose(connection)
     ? connection
     : {
-        point: Vector.of(connection).subtract({
+        vector: Vector.of(connection).subtract({
           x: track.length / 2 - 1,
           y: 0,
         }),
@@ -30,10 +30,10 @@ function shapeFactory(id: string, connection: Coords | Pose) {
     y: Math.sin((angle * Math.PI) / 180),
   });
 
-  const ep1: Pose = { point: start.add(unit), angle: angle - 180 };
+  const ep1: Pose = { vector: start.add(unit), angle: angle - 180 };
 
   const ep2: Pose = {
-    point: start.add(unit.multiply(track.length)),
+    vector: start.add(unit.multiply(track.length)),
     angle,
   };
 
@@ -42,10 +42,10 @@ function shapeFactory(id: string, connection: Coords | Pose) {
     y: (unit.x * SLEEPER_LENGTH) / 2,
   };
 
-  const topLeft = ep1.point.subtract(ou);
-  const bottomLeft = ep1.point.add(ou);
-  const topRight = ep2.point.subtract(ou);
-  const bottomRight = ep2.point.add(ou);
+  const topLeft = ep1.vector.subtract(ou);
+  const bottomLeft = ep1.vector.add(ou);
+  const topRight = ep2.vector.subtract(ou);
+  const bottomRight = ep2.vector.add(ou);
 
   const outlineInstructions = [
     `M ${topLeft.XY}`,
@@ -62,8 +62,8 @@ function shapeFactory(id: string, connection: Coords | Pose) {
       ctx.strokeStyle = track.colour;
       ctx.lineWidth = SLEEPER_LENGTH;
       ctx.beginPath();
-      ctx.moveTo(ep1.point.x, ep1.point.y);
-      ctx.lineTo(ep2.point.x, ep2.point.y);
+      ctx.moveTo(ep1.vector.x, ep1.vector.y);
+      ctx.lineTo(ep2.vector.x, ep2.vector.y);
       ctx.stroke();
     },
     outline: outlineInstructions.join(" "),
