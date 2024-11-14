@@ -8,7 +8,7 @@ function trackLookup(catalog: TrackSpec[]) {
     const track = catalog.find((t) => t.id === trackId);
 
     if (!track) {
-      return new UnknownTrack();
+      return unknownTrack();
     }
 
     const connection = isPose(coords)
@@ -19,14 +19,17 @@ function trackLookup(catalog: TrackSpec[]) {
       return new Straight(connection, track.colour, track.length);
     }
 
-    return new UnknownTrack();
+    return unknownTrack();
   };
 }
 
-class UnknownTrack extends Track {
-  constructor() {
-    super("unknown", "", "", []);
-  }
+function unknownTrack() {
+  return {
+    kind: "unknown",
+    colour: "",
+    outline: "",
+    endpoints: [],
+  } as Track;
 }
 
 export { trackLookup };

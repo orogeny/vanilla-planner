@@ -3,8 +3,15 @@ import { Pose } from "../../lib/pose";
 import { Vector } from "../../lib/vector";
 import { Track } from "./track";
 
-class Straight extends Track {
+class Straight implements Track {
+  readonly kind = "straight";
+  readonly colour: string;
+  readonly outline: string;
+  readonly endpoints: Pose[];
+
   constructor(connection: Pose, colour: string, length: number) {
+    this.colour = colour;
+
     const unit = Vector.of({
       x: Math.cos((connection.angle * Math.PI) / 180),
       y: Math.sin((connection.angle * Math.PI) / 180),
@@ -25,7 +32,7 @@ class Straight extends Track {
       y: (unit.x * SLEEPER_LENGTH) / 2,
     };
 
-    const outline = [
+    this.outline = [
       `M ${start.vector.subtract(ou).XY}`,
       `L ${end.vector.subtract(ou).XY}`,
       `L ${end.vector.add(ou).XY}`,
@@ -33,7 +40,7 @@ class Straight extends Track {
       "Z",
     ].join(" ");
 
-    super("straight", colour, outline, [start, end]);
+    this.endpoints = [start, end];
   }
 }
 
