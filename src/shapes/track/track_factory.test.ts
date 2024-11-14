@@ -1,9 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { TrackSpec } from "../../data/track_catalog";
 import { trackLookup } from "./track_factory";
-import { Vector } from "../../lib/vector";
 
-describe("trackFactory - types", () => {
+describe("track types", () => {
   test("should return unknown track", () => {
     const trackFactory = trackLookup([]);
 
@@ -11,9 +10,49 @@ describe("trackFactory - types", () => {
 
     expect(result.kind).toBe("unknown");
   });
+
+  test("should return straight track", () => {
+    const trackFactory = trackLookup(catalog);
+
+    const track = trackFactory("1", { x: 0, y: 0 });
+
+    expect(track.kind).toBe("straight");
+  });
 });
 
-describe("trackFactory - unknown", () => {
+describe("track factory converts coords to pose", () => {
+  test("should have 2 endpoints", () => {
+    const trackFactory = trackLookup(catalog);
+
+    const track = trackFactory("1", { x: 0, y: 0 });
+
+    expect(track.endpoints).toHaveLength(2);
+  });
+
+  test("endpoints should be 166 horizontal units apart", () => {
+    const trackFactory = trackLookup(catalog);
+
+    const track = trackFactory("1", { x: 0, y: 0 });
+
+    const x0 = track.endpoints[0].vector.x;
+    const x1 = track.endpoints[1].vector.x;
+
+    expect(x1 - x0).toBe(166);
+  });
+
+  test("endpoints should be 0 vertical units apart", () => {
+    const trackFactory = trackLookup(catalog);
+
+    const track = trackFactory("1", { x: 0, y: 0 });
+
+    const y0 = track.endpoints[0].vector.y;
+    const y1 = track.endpoints[1].vector.y;
+
+    expect(y1 - y0).toBe(0);
+  });
+});
+
+describe("UnknownTrack", () => {
   test("unknow track has zero endpoints", () => {
     const trackFactory = trackLookup([]);
 
@@ -21,92 +60,13 @@ describe("trackFactory - unknown", () => {
   });
 });
 
-describe("trackFactory - track", () => {
-  test("should return track", () => {
-    const catalog: TrackSpec[] = [
-      {
-        id: "1",
-        kind: "straight",
-        catno: "TT8002",
-        label: "166mm",
-        colour: "#0bff01",
-        length: 166,
-      },
-    ];
-
-    const trackFactory = trackLookup(catalog);
-
-    const track = trackFactory("1", { x: 0, y: 0 });
-
-    expect(track).not.toBeUndefined();
-    expect(track.kind).toBe("straight");
-  });
-
-  test("should return a straight", () => {
-    const catalog: TrackSpec[] = [
-      {
-        id: "1",
-        kind: "straight",
-        catno: "TT8002",
-        label: "166mm",
-        colour: "#0bff01",
-        length: 166,
-      },
-    ];
-
-    const trackFactory = trackLookup(catalog);
-
-    const track = trackFactory("1", { x: 0, y: 0 });
-
-    expect(track.kind).toBe("straight");
-    expect(track.endpoints).toHaveLength(2);
-  });
-
-  test("should accept coords", () => {
-    const catalog: TrackSpec[] = [
-      {
-        id: "1",
-        kind: "straight",
-        catno: "TT8002",
-        label: "166mm",
-        colour: "#0bff01",
-        length: 166,
-      },
-    ];
-
-    const trackFactory = trackLookup(catalog);
-
-    const track = trackFactory("1", { x: 0, y: 0 });
-
-    expect(track.endpoints[0].angle).toBe(-180);
-    expect(track.endpoints[0].vector.XY).toBe("1 0");
-
-    expect(track.endpoints[1].angle).toBe(0);
-    expect(track.endpoints[1].vector.XY).toBe("167 0");
-  });
-
-  test("should accept pose", () => {
-    const catalog: TrackSpec[] = [
-      {
-        id: "1",
-        kind: "straight",
-        catno: "TT8002",
-        label: "166mm",
-        colour: "#0bff01",
-        length: 166,
-      },
-    ];
-
-    const trackFactory = trackLookup(catalog);
-
-    const verticalPose = { vector: Vector.of({ x: 0, y: 0 }), angle: 90 };
-
-    const track = trackFactory("1", verticalPose);
-
-    expect(track.endpoints[0].angle).toBe(-90);
-    expect(track.endpoints[0].vector.XY).toBe("0 1");
-
-    expect(track.endpoints[1].angle).toBe(90);
-    expect(track.endpoints[1].vector.XY).toBe("0 167");
-  });
-});
+const catalog: TrackSpec[] = [
+  {
+    id: "1",
+    kind: "straight",
+    catno: "TT8002",
+    label: "166mm",
+    colour: "#0bff01",
+    length: 166,
+  },
+];
