@@ -88,6 +88,8 @@ function animate(time: number) {
   for (const track of laidTrack) {
     ctx.save();
 
+    ctx.strokeStyle = track.colour;
+
     const outline = new Path2D(track.outline);
     ctx.stroke(outline);
 
