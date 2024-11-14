@@ -1,7 +1,7 @@
-import { Track } from "./track";
+import { SLEEPER_LENGTH } from "../../data/track_catalog";
 import { Pose } from "../../lib/pose";
 import { Vector } from "../../lib/vector";
-import { SLEEPER_LENGTH } from "../../data/track_catalog";
+import { Track } from "./track";
 
 class Straight extends Track {
   constructor(connection: Pose, length: number) {
