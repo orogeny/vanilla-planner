@@ -1,8 +1,7 @@
 import { track_catalog } from "./data/track_catalog";
 import { Pose } from "./lib/pose";
 import { Coords } from "./lib/vector";
-import { Track } from "./shapes/track/track";
-import { trackLookup } from "./shapes/track/track_factory";
+import { Track, trackLookup } from "./shapes/track/track_lookup";
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -10,7 +9,11 @@ let ctx: CanvasRenderingContext2D;
 let trackFactory: (id: string, coords: Coords | Pose) => Track;
 let laidTrack: Track[] = [];
 
+let requestAnimation = false;
+
 function setup() {
+  addOnOffToggle();
+
   trackFactory = trackLookup(track_catalog);
 
   canvas = document.querySelector<HTMLCanvasElement>("canvas.board")!;
@@ -26,6 +29,27 @@ function setup() {
 
   canvas.ondragover = handleDragOver;
   canvas.ondrop = handleDrop;
+}
+
+function addOnOffToggle() {
+  const sidebar = document.querySelector<HTMLDivElement>(".sidebar")!;
+
+  const button = document.createElement("button");
+  button.style.padding = "8px 0";
+  button.innerText = "Start";
+
+  sidebar.appendChild(button);
+
+  button.onclick = () => {
+    if (requestAnimation) {
+      requestAnimation = false;
+      button.innerText = "Start";
+    } else {
+      requestAnimation = true;
+      button.innerText = "Stop";
+      requestAnimationFrame(animate);
+    }
+  };
 }
 
 // Drag n Drop Event handlers
@@ -51,9 +75,22 @@ function handleDrop(ev: DragEvent) {
     if (track.kind !== "unknown") {
       laidTrack.push(track);
     }
+  }
+}
 
-    const path = new Path2D(track.outline);
-    ctx.stroke(path);
+function animate(time: number) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (const track of laidTrack) {
+    ctx.save();
+
+    track.render(ctx);
+
+    ctx.restore();
+  }
+
+  if (requestAnimation) {
+    requestAnimationFrame(animate);
   }
 }
 

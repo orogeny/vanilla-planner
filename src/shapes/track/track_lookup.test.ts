@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { TrackSpec } from "../../data/track_catalog";
-import { trackLookup } from "./track_factory";
+import { trackLookup } from "./track_lookup";
 
 describe("track types", () => {
   test("should return unknown track", () => {
@@ -63,6 +63,25 @@ describe("UnknownTrack", () => {
     const trackFactory = trackLookup([]);
 
     expect(trackFactory("ZTT", { x: 0, y: 0 }).outline).toBe("");
+  });
+});
+
+describe("track base properties", () => {
+  test("track captures colour value", () => {
+    const trackFactory = trackLookup([
+      {
+        id: "2",
+        kind: "straight",
+        catno: "TT8039",
+        label: "332mm",
+        colour: "#fe00f6",
+        length: 322,
+      },
+    ]);
+
+    const track = trackFactory("2", { x: 0, y: 0 });
+
+    expect(track.colour).toBe("#fe00f6");
   });
 });
 

@@ -1,10 +1,17 @@
 import { SLEEPER_LENGTH } from "../../data/track_catalog";
 import { Pose } from "../../lib/pose";
 import { Vector } from "../../lib/vector";
-import { Track } from "./track";
+import { Track } from "./track_lookup";
 
-class Straight extends Track {
-  constructor(connection: Pose, length: number) {
+class Straight implements Track {
+  readonly kind = "straight";
+  readonly colour: string;
+  readonly outline: string;
+  readonly endpoints: Pose[];
+
+  constructor(connection: Pose, colour: string, length: number) {
+    this.colour = colour;
+
     const unit = Vector.of({
       x: Math.cos((connection.angle * Math.PI) / 180),
       y: Math.sin((connection.angle * Math.PI) / 180),
@@ -25,7 +32,7 @@ class Straight extends Track {
       y: (unit.x * SLEEPER_LENGTH) / 2,
     };
 
-    const outline = [
+    this.outline = [
       `M ${start.vector.subtract(ou).XY}`,
       `L ${end.vector.subtract(ou).XY}`,
       `L ${end.vector.add(ou).XY}`,
@@ -33,7 +40,19 @@ class Straight extends Track {
       "Z",
     ].join(" ");
 
-    super("straight", [start, end], outline);
+    this.endpoints = [start, end];
+  }
+
+  render(ctx: CanvasRenderingContext2D) {
+    ctx.strokeStyle = this.colour;
+    ctx.lineWidth = SLEEPER_LENGTH;
+
+    ctx.beginPath();
+
+    ctx.moveTo(this.endpoints[0].vector.x, this.endpoints[0].vector.y);
+    ctx.lineTo(this.endpoints[1].vector.x, this.endpoints[1].vector.y);
+
+    ctx.stroke();
   }
 }
 
