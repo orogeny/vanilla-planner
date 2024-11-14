@@ -1,7 +1,14 @@
 import { TrackSpec } from "../../data/track_catalog";
 import { Coords, isPose, Pose, Vector } from "../../lib/vector";
 import { Straight } from "./straight";
-import { Track } from "./track";
+
+type Track = {
+  kind: "straight" | "unknown";
+  colour: string;
+  outline: string;
+  endpoints: Pose[];
+  render: (ctx: CanvasRenderingContext2D) => void;
+};
 
 function trackLookup(catalog: TrackSpec[]) {
   return (trackId: string, coords: Coords | Pose) => {
@@ -33,4 +40,4 @@ function unknownTrack() {
   } as Track;
 }
 
-export { trackLookup };
+export { trackLookup, type Track };
