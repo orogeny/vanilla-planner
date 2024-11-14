@@ -1,6 +1,7 @@
-import { Track } from "./track";
+import { SLEEPER_LENGTH } from "../../data/track_catalog";
 import { Pose } from "../../lib/pose";
 import { Vector } from "../../lib/vector";
+import { Track } from "./track";
 
 class Straight extends Track {
   constructor(connection: Pose, length: number) {
@@ -19,7 +20,20 @@ class Straight extends Track {
       angle: connection.angle,
     };
 
-    super("straight", [start, end]);
+    const ou = {
+      x: (-unit.y * SLEEPER_LENGTH) / 2,
+      y: (unit.x * SLEEPER_LENGTH) / 2,
+    };
+
+    const outline = [
+      `M ${start.vector.subtract(ou).XY}`,
+      `L ${end.vector.subtract(ou).XY}`,
+      `L ${end.vector.add(ou).XY}`,
+      `L ${start.vector.add(ou).XY}`,
+      "Z",
+    ].join(" ");
+
+    super("straight", [start, end], outline);
   }
 }
 

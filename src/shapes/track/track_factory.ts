@@ -25,7 +25,7 @@ function trackLookup(catalog: TrackSpec[]) {
 
 class UnknownTrack extends Track {
   constructor() {
-    super("unknown", []);
+    super("unknown", [], "");
   }
 }
 

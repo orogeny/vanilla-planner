@@ -59,4 +59,4 @@ function isVector(obj: any): obj is Vector {
   );
 }
 
-export { Vector, isPose, isVector, type Coords, type Pose };
+export { isPose, isVector, Vector, type Coords, type Pose };

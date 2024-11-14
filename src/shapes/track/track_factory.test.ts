@@ -53,10 +53,16 @@ describe("track factory converts coords to pose", () => {
 });
 
 describe("UnknownTrack", () => {
-  test("unknow track has zero endpoints", () => {
+  test("has zero endpoints", () => {
     const trackFactory = trackLookup([]);
 
     expect(trackFactory("ZTT", { x: 0, y: 0 }).endpoints).toHaveLength(0);
+  });
+
+  test("has empty outline", () => {
+    const trackFactory = trackLookup([]);
+
+    expect(trackFactory("ZTT", { x: 0, y: 0 }).outline).toBe("");
   });
 });
 
