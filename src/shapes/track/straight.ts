@@ -20,11 +20,16 @@ class Straight extends Track {
       angle: connection.angle,
     };
 
+    const ou = {
+      x: (-unit.y * SLEEPER_LENGTH) / 2,
+      y: (unit.x * SLEEPER_LENGTH) / 2,
+    };
+
     const outline = [
-      `M ${start.vector.x} ${start.vector.y - SLEEPER_LENGTH / 2}`,
-      `L ${end.vector.x} ${end.vector.y - SLEEPER_LENGTH / 2}`,
-      `L ${end.vector.x} ${end.vector.y + SLEEPER_LENGTH / 2}`,
-      `L ${start.vector.x} ${start.vector.y + SLEEPER_LENGTH / 2}`,
+      `M ${start.vector.subtract(ou).XY}`,
+      `L ${end.vector.subtract(ou).XY}`,
+      `L ${end.vector.add(ou).XY}`,
+      `L ${start.vector.add(ou).XY}`,
       "Z",
     ].join(" ");
 
