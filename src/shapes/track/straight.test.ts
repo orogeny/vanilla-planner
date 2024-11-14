@@ -43,4 +43,12 @@ describe("Straight", () => {
 
     expect(straight.endpoints[1].vector.XY).toBe("301 100");
   });
+
+  test("should have outline", () => {
+    const connection = { vector: Vector.of({ x: 199, y: 200 }), angle: 0 };
+
+    const straight = new Straight(connection, 200);
+
+    expect(straight.outline).toBe("M 200 189 L 400 189 L 400 211 L 200 211 Z");
+  });
 });
