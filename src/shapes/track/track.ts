@@ -2,13 +2,20 @@ import { Pose } from "../../lib/pose";
 
 class Track {
   readonly kind: string;
-  endpoints: Pose[];
+  readonly colour: string;
   readonly outline: string;
+  endpoints: Pose[];
 
-  constructor(kind: string, endpoints: Pose[], outline: string) {
+  constructor(
+    kind: string,
+    colour: string,
+    outline: string,
+    endpoints: Pose[]
+  ) {
     this.kind = kind;
-    this.endpoints = endpoints;
+    this.colour = colour;
     this.outline = outline;
+    this.endpoints = endpoints;
   }
 }
 

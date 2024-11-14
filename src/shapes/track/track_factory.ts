@@ -16,7 +16,7 @@ function trackLookup(catalog: TrackSpec[]) {
       : { vector: Vector.of(coords), angle: 0 };
 
     if (track.kind === "straight") {
-      return new Straight(connection, track.length);
+      return new Straight(connection, track.colour, track.length);
     }
 
     return new UnknownTrack();
@@ -25,7 +25,7 @@ function trackLookup(catalog: TrackSpec[]) {
 
 class UnknownTrack extends Track {
   constructor() {
-    super("unknown", [], "");
+    super("unknown", "", "", []);
   }
 }
 

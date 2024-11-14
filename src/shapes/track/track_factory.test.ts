@@ -66,6 +66,25 @@ describe("UnknownTrack", () => {
   });
 });
 
+describe("track base properties", () => {
+  test("track captures colour value", () => {
+    const trackFactory = trackLookup([
+      {
+        id: "2",
+        kind: "straight",
+        catno: "TT8039",
+        label: "332mm",
+        colour: "#fe00f6",
+        length: 322,
+      },
+    ]);
+
+    const track = trackFactory("2", { x: 0, y: 0 });
+
+    expect(track.colour).toBe("#fe00f6");
+  });
+});
+
 const catalog: TrackSpec[] = [
   {
     id: "1",

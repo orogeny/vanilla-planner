@@ -4,7 +4,7 @@ import { Vector } from "../../lib/vector";
 import { Track } from "./track";
 
 class Straight extends Track {
-  constructor(connection: Pose, length: number) {
+  constructor(connection: Pose, colour: string, length: number) {
     const unit = Vector.of({
       x: Math.cos((connection.angle * Math.PI) / 180),
       y: Math.sin((connection.angle * Math.PI) / 180),
@@ -33,7 +33,7 @@ class Straight extends Track {
       "Z",
     ].join(" ");
 
-    super("straight", [start, end], outline);
+    super("straight", colour, outline, [start, end]);
   }
 }
 
