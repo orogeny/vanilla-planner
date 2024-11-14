@@ -1,5 +1,6 @@
+import { Pose } from "./pose";
+
 type Coords = { x: number; y: number };
-type Pose = { point: Vector; angle: number };
 
 class Vector implements Coords {
   x: number;
@@ -15,7 +16,7 @@ class Vector implements Coords {
   }
 
   public get XY() {
-    return `${this.x} ${this.y}`;
+    return `${this.x.toFixed(0)} ${this.y.toFixed(0)}`;
   }
 
   add({ x, y }: Coords) {
@@ -29,6 +30,13 @@ class Vector implements Coords {
   multiply(factor: number) {
     return new Vector(this.x * factor, this.y * factor);
   }
+
+  encircles(coords: Coords, proximity = 6) {
+    const dx = this.x - coords.x;
+    const dy = this.y - coords.y;
+
+    return dx * dx + dy * dy <= proximity * proximity;
+  }
 }
 
 function isPose(obj: any): obj is Pose {
@@ -36,8 +44,8 @@ function isPose(obj: any): obj is Pose {
     typeof obj === "object" &&
     obj !== null &&
     "angle" in obj &&
-    "point" in obj &&
-    isVector(obj.point)
+    "vector" in obj &&
+    isVector(obj.vector)
   );
 }
 

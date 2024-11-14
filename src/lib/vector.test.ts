@@ -24,10 +24,10 @@ describe("Coordinates", () => {
   });
 
   test("should extend a vector", () => {
-    const point = Vector.of({ x: 3, y: 4 }).multiply(10);
+    const vector = Vector.of({ x: 3, y: 4 }).multiply(10);
 
-    expect(point.x).toBe(30);
-    expect(point.y).toBe(40);
+    expect(vector.x).toBe(30);
+    expect(vector.y).toBe(40);
   });
 
   test("should produce SVG coords", () => {
@@ -37,13 +37,13 @@ describe("Coordinates", () => {
 
 describe("Pose guard", () => {
   test("should be a pose", () => {
-    const pose = { point: Vector.of({ x: 10, y: 10 }), angle: 90 } as unknown;
+    const pose = { vector: Vector.of({ x: 10, y: 10 }), angle: 90 } as unknown;
 
     expect(isPose(pose)).toBeTruthy();
   });
 
   test("should not be a pose", () => {
-    const lookalike = { point: { x: 5, y: 5 }, angle: 20 };
+    const lookalike = { vector: { x: 5, y: 5 }, angle: 20 };
 
     expect(isPose(lookalike)).toBeFalsy();
   });
@@ -60,5 +60,19 @@ describe("Vector guard", () => {
     const location = { x: 10, y: 10 };
 
     expect(isVector(location)).toBeFalsy();
+  });
+
+  describe("encircles", () => {
+    test("should encircle point", () => {
+      expect(
+        Vector.of({ x: 0, y: 0 }).encircles({ x: 10, y: 0 }, 10)
+      ).toBeTruthy();
+    });
+
+    test("should not encircle point", () => {
+      expect(
+        Vector.of({ x: 0, y: 0 }).encircles({ x: 0, y: 11 }, 10)
+      ).toBeFalsy();
+    });
   });
 });
