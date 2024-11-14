@@ -1,7 +1,7 @@
 import { SLEEPER_LENGTH } from "../../data/track_catalog";
 import { Pose } from "../../lib/pose";
 import { Vector } from "../../lib/vector";
-import { Track } from "./track_factory";
+import { Track } from "./track_lookup";
 
 class Straight implements Track {
   readonly kind = "straight";

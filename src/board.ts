@@ -1,7 +1,7 @@
 import { track_catalog } from "./data/track_catalog";
 import { Pose } from "./lib/pose";
 import { Coords } from "./lib/vector";
-import { Track, trackLookup } from "./shapes/track/track_factory";
+import { Track, trackLookup } from "./shapes/track/track_lookup";
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
