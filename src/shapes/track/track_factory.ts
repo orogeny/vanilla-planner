@@ -29,6 +29,7 @@ function unknownTrack() {
     colour: "",
     outline: "",
     endpoints: [],
+    render: () => {},
   } as Track;
 }
 

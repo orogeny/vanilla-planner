@@ -42,6 +42,18 @@ class Straight implements Track {
 
     this.endpoints = [start, end];
   }
+
+  render(ctx: CanvasRenderingContext2D) {
+    ctx.strokeStyle = this.colour;
+    ctx.lineWidth = SLEEPER_LENGTH;
+
+    ctx.beginPath();
+
+    ctx.moveTo(this.endpoints[0].vector.x, this.endpoints[0].vector.y);
+    ctx.lineTo(this.endpoints[1].vector.x, this.endpoints[1].vector.y);
+
+    ctx.stroke();
+  }
 }
 
 export { Straight };

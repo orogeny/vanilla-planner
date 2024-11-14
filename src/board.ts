@@ -76,9 +76,6 @@ function handleDrop(ev: DragEvent) {
     if (track.kind !== "unknown") {
       laidTrack.push(track);
     }
-
-    const path = new Path2D(track.outline);
-    ctx.stroke(path);
   }
 }
 
@@ -88,10 +85,7 @@ function animate(time: number) {
   for (const track of laidTrack) {
     ctx.save();
 
-    ctx.strokeStyle = track.colour;
-
-    const outline = new Path2D(track.outline);
-    ctx.stroke(outline);
+    track.render(ctx);
 
     ctx.restore();
   }

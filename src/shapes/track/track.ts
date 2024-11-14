@@ -5,6 +5,7 @@ type Track = {
   colour: string;
   outline: string;
   endpoints: Pose[];
+  render: (ctx: CanvasRenderingContext2D) => void;
 };
 
 export { type Track };
