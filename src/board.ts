@@ -1,17 +1,28 @@
-import { shapeFactory } from "./shape";
+import { track_catalog } from "./data/track_catalog";
+import { Pose } from "./lib/pose";
+import { Coords } from "./lib/vector";
+import { Track } from "./shapes/track/track";
+import { trackLookup } from "./shapes/track/track_factory";
 
 let canvas: HTMLCanvasElement;
+let ctx: CanvasRenderingContext2D;
+
+let trackFactory: (id: string, coords: Coords | Pose) => Track;
+let laidTrack: Track[] = [];
 
 function setup() {
+  trackFactory = trackLookup(track_catalog);
+
   canvas = document.querySelector<HTMLCanvasElement>("canvas.board")!;
+  ctx = canvas.getContext("2d")!;
 
-  const { clientWidth, clientHeight } = canvas.parentElement!;
+  const containerRect = canvas.parentElement!.getBoundingClientRect();
 
-  canvas.style.width = `${clientWidth}px`;
-  canvas.style.height = `${clientHeight}px`;
+  canvas.style.width = `${containerRect.width}px`;
+  canvas.style.height = `${containerRect.height}px`;
 
-  canvas.width = clientWidth;
-  canvas.height = clientHeight;
+  canvas.width = containerRect.width;
+  canvas.height = containerRect.height;
 
   canvas.ondragover = handleDragOver;
   canvas.ondrop = handleDrop;
@@ -32,13 +43,18 @@ function handleDrop(ev: DragEvent) {
     `dropped "${dropped}" @ (${ev.offsetX}, ${ev.offsetY}) onto canvas`
   );
 
-  const [_, id] = dropped.split("#");
+  const [kind, id] = dropped.split("#");
 
-  const shape = shapeFactory(id, { x: ev.offsetX, y: ev.offsetY });
+  if (kind === "track") {
+    const track = trackFactory(id, { x: ev.offsetX, y: ev.offsetY });
 
-  const ctx = canvas.getContext("2d")!;
+    if (track.kind !== "unknown") {
+      laidTrack.push(track);
+    }
 
-  shape.render(ctx);
+    const path = new Path2D(track.outline);
+    ctx.stroke(path);
+  }
 }
 
 export { setup };
